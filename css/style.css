@@ -157,10 +157,11 @@ section.tight { padding-block: var(--space-5); }
   border: 2px solid transparent;
   cursor: pointer;
   min-height: 52px;
-  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(20, 40, 43, 0.16); }
+.btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+.btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-primary {
   background: var(--color-primary);
   color: var(--color-text-on-primary);
@@ -253,9 +254,19 @@ section.tight { padding-block: var(--space-5); }
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 .btn-whatsapp svg { width: 22px; height: 22px; flex-shrink: 0; }
-.btn-whatsapp:hover { background: #1EBE5A; }
+.btn-whatsapp:hover { background: #1EBE5A; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35); }
+.btn-whatsapp:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .header-cta .btn-whatsapp { animation: whatsapp-glow 3.2s ease-in-out infinite; }
+  .header-cta .btn-whatsapp:hover { animation: none; }
+}
+@keyframes whatsapp-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+}
 @media (max-width: 1180px) {
   .header-cta .btn-whatsapp { display: none; }
 }
@@ -332,6 +343,7 @@ section.tight { padding-block: var(--space-5); }
 /* --------- Hero --------- */
 .hero {
   padding-block: var(--space-6) var(--space-5);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg) 55%, var(--color-accent-green-tint) 160%);
 }
 .hero .container {
   display: grid;
@@ -343,14 +355,53 @@ section.tight { padding-block: var(--space-5); }
 .hero .lede { max-width: 46ch; }
 .hero-art {
   position: relative;
+}
+.hero-art::before,
+.hero-art::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+}
+.hero-art::before {
+  width: 78%;
+  height: 78%;
+  top: -8%;
+  right: -10%;
+  background: var(--color-accent-green-tint);
+}
+.hero-art::after {
+  width: 34%;
+  height: 34%;
+  bottom: -8%;
+  left: -8%;
+  background: var(--color-accent-yellow-tint);
+}
+.hero-art-frame {
+  position: relative;
+  z-index: 1;
   aspect-ratio: 420 / 580;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
   background: var(--color-primary-tint);
 }
-.hero-art svg,
-.hero-art img { width: 100%; height: 100%; object-fit: cover; }
+.hero-art-frame svg,
+.hero-art-frame img { width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art-frame { transition: transform 0.4s ease; }
+  .hero-art:hover .hero-art-frame { transform: translateY(-4px); }
+  .hero-art::before { animation: float-blob-a 9s ease-in-out infinite; }
+  .hero-art::after { animation: float-blob-b 7s ease-in-out infinite; }
+}
+@keyframes float-blob-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-3%, 4%) scale(1.04); }
+}
+@keyframes float-blob-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, -5%) scale(1.06); }
+}
 
 @media (max-width: 900px) {
   .hero .container { grid-template-columns: 1fr; }
@@ -369,21 +420,34 @@ section.tight { padding-block: var(--space-5); }
   padding: var(--space-4);
   margin-top: var(--space-3);
 }
-.price-box-amount {
+.price-box-tiers {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.price-box-amount {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 160px;
-  padding: 1.25rem 1.5rem;
+  min-width: 180px;
+  padding: 1rem 1.5rem;
   border-radius: var(--radius-md);
   background: rgba(251, 246, 236, 0.1);
   border: 1px solid rgba(251, 246, 236, 0.25);
 }
+.price-box-label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-accent-green);
+  margin-bottom: 0.25rem;
+}
 .price-box-value {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
   color: var(--color-accent-yellow);
@@ -394,9 +458,16 @@ section.tight { padding-block: var(--space-5); }
   margin-top: 0.3rem;
 }
 .price-box-text h2 { color: var(--color-text-on-primary); }
-.price-box-text p { color: rgba(251, 246, 236, 0.85); margin-bottom: 0; }
+.price-box-text p { color: rgba(251, 246, 236, 0.85); }
+.price-box-text .card-note {
+  background: rgba(251, 246, 236, 0.1);
+  color: rgba(251, 246, 236, 0.85);
+  margin-top: var(--space-2);
+  margin-bottom: 0;
+}
 @media (max-width: 640px) {
   .price-box { flex-direction: column; text-align: center; }
+  .price-box-tiers { width: 100%; }
   .price-box-amount { width: 100%; }
 }
 
@@ -411,7 +482,10 @@ section.tight { padding-block: var(--space-5); }
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1.1rem 1.4rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+.faq-item:hover { border-color: var(--color-accent-green); }
+.faq-item[open] { box-shadow: var(--shadow-sm); }
 .faq-item summary {
   cursor: pointer;
   font-weight: 600;
@@ -461,7 +535,14 @@ section.tight { padding-block: var(--space-5); }
   padding: var(--space-3);
   box-shadow: var(--shadow-sm);
   height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-green);
+}
+.card:hover .card-icon { transform: scale(1.06); }
 .card-icon {
   width: 52px;
   height: 52px;
@@ -472,6 +553,7 @@ section.tight { padding-block: var(--space-5); }
   justify-content: center;
   margin-bottom: var(--space-2);
   color: var(--color-accent-green-dark);
+  transition: transform 0.2s ease;
 }
 .card-icon svg { width: 26px; height: 26px; }
 .card ul {
@@ -512,9 +594,19 @@ section.tight { padding-block: var(--space-5); }
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+.audience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-green);
+}
+.audience-card:hover .card-icon { transform: scale(1.06); }
 .audience-card h3 { margin-bottom: 0.5rem; }
 .audience-card .card-icon { background: var(--color-primary-tint); color: var(--color-primary); }
+.card-icon.icon-green { background: var(--color-accent-green-tint); color: var(--color-accent-green-dark); }
+.card-icon.icon-yellow { background: var(--color-accent-yellow-tint); color: #9c7a2e; }
+.card-icon.icon-primary { background: var(--color-primary-tint); color: var(--color-primary); }
 
 /* --------- Schritte --------- */
 .steps {
@@ -526,15 +618,21 @@ section.tight { padding-block: var(--space-5); }
 @media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
 .step {
   position: relative;
-  padding-top: var(--space-2);
-  border-top: 3px solid var(--color-accent-green);
+  padding-top: var(--space-3);
 }
 .step-number {
   font-family: var(--font-display);
-  font-size: var(--fs-2xl);
-  color: var(--color-accent-green-dark);
-  display: block;
-  margin-bottom: 0.5rem;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--color-text-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-accent-green);
+  margin-bottom: var(--space-2);
 }
 
 /* --------- Werte / Vertrauen --------- */
@@ -704,6 +802,17 @@ input:focus, select:focus, textarea:focus {
 .cookie-banner p { margin: 0; font-size: var(--fs-sm); flex: 1 1 260px; }
 .cookie-banner a { color: var(--color-accent-yellow); text-decoration: underline; }
 .cookie-banner .btn { flex-shrink: 0; min-height: 44px; padding: 0.7rem 1.4rem; }
+
+/* --------- Scroll-Reveal --------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* --------- Utility --------- */
 .text-center { text-align: center; }

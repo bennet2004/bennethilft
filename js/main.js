@@ -17,6 +17,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Sanfte Scroll-Reveal-Animation (progressive enhancement: ohne JS oder bei
+  // reduzierter Bewegung bleibt alles normal sichtbar, es wird nichts versteckt).
+  var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    var revealTargets = document.querySelectorAll(
+      ".section-head, .card, .audience-card, .faq-item, .price-box, .step"
+    );
+    var groupIndex = new Map();
+    revealTargets.forEach(function (el) {
+      var parent = el.parentElement;
+      var siblingIndex = groupIndex.get(parent) || 0;
+      el.classList.add("reveal");
+      if (siblingIndex > 0) {
+        el.style.transitionDelay = Math.min(siblingIndex * 70, 280) + "ms";
+      }
+      groupIndex.set(parent, siblingIndex + 1);
+    });
+
+    var revealObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealTargets.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
+
   // Cookie-Hinweis (rein informativ, keine Tracking-/Marketing-Cookies)
   var cookieBanner = document.querySelector("#cookie-banner");
   if (cookieBanner) {
