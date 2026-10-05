@@ -5,32 +5,32 @@
 
 :root {
   /* Farben */
-  --color-bg: #FBF6EC;
-  --color-bg-alt: #F3EBD9;
-  --color-bg-deep: #EDE3CD;
+  --color-bg: #F2F5F3;
+  --color-bg-alt: #E3ECE8;
+  --color-bg-deep: #D7E3DE;
   --color-surface: #FFFFFF;
 
   --color-primary: #1E3A3E;
   --color-primary-dark: #14282B;
   --color-primary-tint: #E8EEED;
 
-  --color-text: #22302E;
-  --color-text-muted: #566360;
-  --color-text-on-primary: #FBF6EC;
+  --color-text: #16292B;
+  --color-text-muted: #4E6264;
+  --color-text-on-primary: #F2F5F3;
 
   --color-accent-green: #7A9873;
   --color-accent-green-dark: #587356;
   --color-accent-green-tint: #EAF1E6;
 
-  --color-accent-yellow: #E3B75C;
+  --color-accent-yellow: #F0B743;
   --color-accent-yellow-tint: #FBF0DC;
 
-  --color-border: #E1D8C4;
+  --color-border: #D5DFDB;
   --color-focus: #B4703A;
 
   /* Typografie */
-  --font-display: "Fraunces", "Georgia", serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
 
   --fs-base: 1.125rem;
   --fs-sm: 0.95rem;
@@ -192,7 +192,7 @@ section.tight { padding-block: var(--space-5); }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(251, 246, 236, 0.92);
+  background: rgba(242, 245, 243, 0.92);
   backdrop-filter: saturate(160%) blur(8px);
   border-bottom: 1px solid var(--color-border);
 }
@@ -434,8 +434,8 @@ section.tight { padding-block: var(--space-5); }
   min-width: 180px;
   padding: 1rem 1.5rem;
   border-radius: var(--radius-md);
-  background: rgba(251, 246, 236, 0.1);
-  border: 1px solid rgba(251, 246, 236, 0.25);
+  background: rgba(242, 245, 243, 0.1);
+  border: 1px solid rgba(242, 245, 243, 0.25);
 }
 .price-box-label {
   font-size: var(--fs-sm);
@@ -458,10 +458,10 @@ section.tight { padding-block: var(--space-5); }
   margin-top: 0.3rem;
 }
 .price-box-text h2 { color: var(--color-text-on-primary); }
-.price-box-text p { color: rgba(251, 246, 236, 0.85); }
+.price-box-text p { color: rgba(242, 245, 243, 0.85); }
 .price-box-text .card-note {
-  background: rgba(251, 246, 236, 0.1);
-  color: rgba(251, 246, 236, 0.85);
+  background: rgba(242, 245, 243, 0.1);
+  color: rgba(242, 245, 243, 0.85);
   margin-top: var(--space-2);
   margin-bottom: 0;
 }
@@ -643,8 +643,8 @@ section.tight { padding-block: var(--space-5); }
   margin-top: var(--space-3);
 }
 .value-pill {
-  background: rgba(251, 246, 236, 0.12);
-  border: 1px solid rgba(251, 246, 236, 0.35);
+  background: rgba(242, 245, 243, 0.12);
+  border: 1px solid rgba(242, 245, 243, 0.35);
   padding: 0.6rem 1.2rem;
   border-radius: 999px;
   font-weight: 500;
@@ -769,7 +769,7 @@ input:focus, select:focus, textarea:focus {
 .footer-bottom {
   margin-top: var(--space-4);
   padding-top: var(--space-3);
-  border-top: 1px solid rgba(251,246,236,0.15);
+  border-top: 1px solid rgba(242, 245, 243,0.15);
   font-size: var(--fs-sm);
   opacity: 0.75;
   display: flex;
