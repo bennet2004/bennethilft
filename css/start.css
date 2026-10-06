@@ -141,6 +141,8 @@ header .btn{padding:.6em 1.1em;font-size:1rem;min-height:44px}
 
 /* Über mich */
 .about{padding-top:0}
+.about.first{padding-block:clamp(40px,7vw,80px) clamp(24px,4vw,40px)}
+.about.first + .hero{padding-top:clamp(24px,4vw,48px)}
 .about .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,5vw,64px);align-items:center}
 @media (max-width:760px){.about .wrap{grid-template-columns:1fr}}
 .photo{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:var(--tint);max-width:440px}
@@ -197,3 +199,4 @@ footer nav{display:flex;flex-wrap:wrap;gap:8px 18px}
 .cookie-banner .btn{background:var(--brand-ink);color:var(--brand);padding:.6em 1.2em}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:760px){.about.first .photo{max-height:340px;object-position:50% 22%}}
